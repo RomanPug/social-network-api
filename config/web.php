@@ -12,7 +12,6 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'controllerMap' =>  [
-        'test' => 'app\controllers\TestController',
         'users' => 'app\controllers\UsersController',
     ],
     'components' => [
@@ -30,6 +29,7 @@ $config = [
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
+            'enableSession' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -53,7 +53,8 @@ $config = [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                'OPTIONS,POST registerUser' => 'users/register-user'
+                'OPTIONS,POST loginUser' => 'users/login-user',
+                'OPTIONS,POST registerUser' => 'users/register-user',
 //                [
 //                    'class'      => 'yii\rest\UrlRule',
 //                    'controller' => 'users',
@@ -83,7 +84,4 @@ if (YII_ENV_DEV) {
         //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
 }
-//echo '<pre>';
-//print_r($config);die;
-//echo '</pre>';
 return $config;

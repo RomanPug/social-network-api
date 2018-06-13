@@ -19,4 +19,6 @@ class UserModel extends ActiveRecord
     public function createUser() {
         $this->save(false);
     }
+
+
 }

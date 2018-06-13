@@ -23,9 +23,7 @@ class UsersController extends AbstractController
                 'success' => 0,
                 'code' => 'email_busy'
             ];
-        }
-
-        if(!$user){
+        } else {
             $user = new SignupForm();
             $user->name = Yii::$app->request->getBodyParam('firstname');
             $user->surname = Yii::$app->request->getBodyParam('lastname');
@@ -42,5 +40,9 @@ class UsersController extends AbstractController
         }
         return $result;
 
+    }
+
+    public function actionLoginUser() {
+        return Yii::$app->request->post();
     }
 }
