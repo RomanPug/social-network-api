@@ -32,10 +32,7 @@ class LoginForm extends Model
         }
     }
 
-
-
-    public function validatePassword($attribute, $params)
-    {
+    public function validatePassword($attribute, $params) {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
@@ -45,8 +42,7 @@ class LoginForm extends Model
         }
     }
 
-    public function getUser()
-    {
+    public function getUser() {
         if ($this->_user === false) {
             $this->_user = UserModel::findByEmail($this->email);
         }

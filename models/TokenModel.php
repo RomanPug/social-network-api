@@ -16,6 +16,7 @@ class TokenModel extends ActiveRecord
         return [
             [['user_id', 'token'], 'required'],
             [['user_id'], 'integer'],
+            [['user_id'], 'unique'],
             [['expire_time'], 'safe'],
             [['token'], 'string', 'max' => 255],
         ];

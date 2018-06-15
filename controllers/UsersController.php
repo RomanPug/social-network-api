@@ -12,6 +12,13 @@ class UsersController extends AbstractController
 {
     public $modelClass = 'app/models/UserModel';
 
+//    public function behaviors() {
+//        $behaviors = parent::behaviors();
+//        $behaviors['authenticator'] = [
+//            'class' => HttpBearerAuth::className(),
+//        ];
+//    }
+
     public function actionRegisterUser() {
 
         $aUserData = Yii::$app->request->post();
@@ -43,14 +50,19 @@ class UsersController extends AbstractController
     }
 
     public function actionLoginUser() {
+        print_r(Yii::$app->request->getBodyParams());die;
         $model = new LoginForm();
         $model->email = Yii::$app->request->getBodyParam('email');
         $model->password = Yii::$app->request->getBodyParam('password');
         if ($token = $model->login()) {
             return [
+                'email' => $model->email,
                 'token' => $token->token,
                 'time' => date(DATE_RFC3339, $token->time),
             ];
-        } else return $model;
+        } else return [
+            'email' => $model->email,
+            'token' => ''
+        ];
     }
 }

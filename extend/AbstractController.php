@@ -29,9 +29,9 @@ abstract class AbstractController extends ActiveController
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-
-        ];
+//        $behaviors['authenticator'] = [
+//
+//        ];
 
         return $behaviors;
     }
