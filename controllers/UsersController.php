@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\forms\LoginForm;
 use Yii;
-use app\extend\AbstractController;
 use app\models\forms\SignupForm;
+use yii\filters\auth\HttpBearerAuth;
+use app\extend\AbstractController;
 
 class UsersController extends AbstractController
 {
@@ -29,9 +31,7 @@ class UsersController extends AbstractController
             $user->surname = Yii::$app->request->getBodyParam('lastname');
             $user->email = Yii::$app->request->getBodyParam('email');
             $user->password = $user->encodePassword(Yii::$app->request->getBodyParam('password'));;
-//            $user->generateAuthKey();
             $user->signup();
-//            $token = $this->genegateToken($user->id);
             $result =   [
                 'success' => 1,
                 'email' =>  $user->email,
@@ -43,6 +43,14 @@ class UsersController extends AbstractController
     }
 
     public function actionLoginUser() {
-        return Yii::$app->request->post();
+        $model = new LoginForm();
+        $model->email = Yii::$app->request->getBodyParam('email');
+        $model->password = Yii::$app->request->getBodyParam('password');
+        if ($token = $model->login()) {
+            return [
+                'token' => $token->token,
+                'time' => date(DATE_RFC3339, $token->time),
+            ];
+        } else return $model;
     }
 }

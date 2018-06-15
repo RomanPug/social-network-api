@@ -18,17 +18,11 @@ class TokenModel extends ActiveRecord
             [['user_id'], 'integer'],
             [['expire_time'], 'safe'],
             [['token'], 'string', 'max' => 255],
-            [['id'], 'exist', 'skipOnError' => true, 'targetClass' => UserModel::className(), 'targetAttribute' => ['id' => 'id']],
         ];
     }
 
-    public function getId()
-    {
-        return $this->hasOne(UserModel::className(), ['id' => 'user_id']);
-    }
-
-    public static function find()
-    {
-        return new TokenQuery(get_called_class());
+    public function generateToken($time) {
+        $this->time = $time;
+        $this->token = \Yii::$app->security->generateRandomString(20);
     }
 }

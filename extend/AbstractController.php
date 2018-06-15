@@ -25,11 +25,12 @@ abstract class AbstractController extends ActiveController
             'class' => Cors::className(),
             'cors' => [
                 'Access-Control-Request-Headers' => ['Origin', 'Content-Type', 'Accept', 'Authorization'],
-                'Origin' => ['*'],
                 'Access-Control-Request-Method' => ['POST, GET'],
                 'Access-Control-Allow-Credentials' => true,
-                'Access-Control-Allow-Origin' => true,
             ]
+        ];
+        $behaviors['authenticator'] = [
+
         ];
 
         return $behaviors;

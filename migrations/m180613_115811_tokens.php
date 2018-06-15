@@ -15,7 +15,7 @@ class m180613_115811_tokens extends Migration
         $this->createTable('tokens', [
             'id' => $this->primaryKey()->notNull(),
             'user_id' => $this->integer(10)->notNull(),
-            'token' => $this->string(255)->notNull(),
+            'token' => $this->string(255)->notNull()->unique(),
             'time' => $this->integer()->notNull()
         ]);
 

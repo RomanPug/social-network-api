@@ -20,5 +20,16 @@ class UserModel extends ActiveRecord
         $this->save(false);
     }
 
+    public function validatePassword($password) {
+        return $this->password === md5($password);
+    }
 
+    public static function findByEmail($email) {
+        if (self::find()->where('email' === $email)->one()) {
+            $result = self::find()->where('email' === $email)->one();
+        } else {
+            $result = false;
+        }
+        return $result;
+    }
 }
