@@ -25,19 +25,21 @@ class LoginForm extends Model
         if ($this->validate()) {
             $token = new TokenModel();
             $token->user_id = $this->getUser()->id;
-            $token->generateToken(time() + 3600 * 24 * 30);
-            return $token->save() ? $token : null;
+            $token->generateToken();
+            return $token ? $token : null;
         } else {
             return null;
         }
     }
 
-    public function validatePassword($attribute, $params) {
+    public function validatePassword() {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->password = 'password_incorrect';
+            } else {
+                $this->password = 'password_correct';
             }
         }
     }
