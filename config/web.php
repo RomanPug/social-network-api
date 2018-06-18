@@ -28,7 +28,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\UserModel',
-            'enableAutoLogin' => true,
+            'enableAutoLogin' => false,
             'enableSession' => false,
         ],
         'errorHandler' => [
