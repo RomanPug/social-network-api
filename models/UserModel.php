@@ -25,7 +25,7 @@ class UserModel extends ActiveRecord
     }
 
     public static function findByEmail($email) {
-        if (self::find()->where('email' === $email)->one()) {
+        if (self::find()->where(['email' => $email])->one()) {
             $result = self::find()->where('email' === $email)->one();
         } else {
             $result = false;

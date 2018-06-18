@@ -51,16 +51,18 @@ class UsersController extends AbstractController
 
     public function actionLoginUser() {
         $model = new LoginForm();
-        $model->email = json_decode(array_keys(Yii::$app->request->getBodyParams())[0],true)['email'];
-        $model->password = json_decode(array_keys(Yii::$app->request->getBodyParams())[0],true)['password'];
+        $model->email = Yii::$app->request->getBodyParam('email');
+        $model->password = Yii::$app->request->getBodyParam('password');
         if ($token = $model->login()) {
             return [
+                'id' => $token->user_id,
                 'email' => $model->email,
                 'token' => $token->token,
                 'time' => date(DATE_RFC3339, $token->time),
                 'password' => $model->password
             ];
         } else return [
+            'id' => $token->user_id,
             'email' => $model->email,
             'token' => ''
         ];

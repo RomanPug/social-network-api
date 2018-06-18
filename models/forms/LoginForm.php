@@ -24,12 +24,14 @@ class LoginForm extends Model
     public function login() {
         if ($this->validate()) {
             $token = new TokenModel();
-            $token->user_id = $this->getUser()->id;
+            $this->getUser() ? $token->user_id = $this->getUser()->id : $token->user_id = 'user_not_found';
             $token->generateToken();
-            return $token ? $token : null;
+            $result = $token ? $token : null;
         } else {
-            return null;
+            $result = null;
         }
+
+        return $result;
     }
 
     public function validatePassword() {
