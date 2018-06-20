@@ -55,7 +55,11 @@ class UserModel extends ActiveRecord implements \yii\web\IdentityInterface
      * or the identity is not in an active state (disabled, deleted, etc.)
      */
     public static function findIdentityByAccessToken($token, $type = null) {
-        return static::find()->with('token')->one();
+        return static::find()
+            ->joinWith('tokens t')
+            ->where(['t.token' => $token])
+            ->andWhere(['>', 't.time', time()])
+            ->one();
     }
 
     /**
@@ -94,7 +98,7 @@ class UserModel extends ActiveRecord implements \yii\web\IdentityInterface
         // TODO: Implement validateAuthKey() method.
     }
 
-    public  function getToken()
+    public  function getTokens()
     {
         return $this->hasOne(TokenModel::className(), ['user_id'=>'id']);
     }

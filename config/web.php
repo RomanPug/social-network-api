@@ -13,6 +13,7 @@ $config = [
     ],
     'controllerMap' =>  [
         'users' => 'app\controllers\UsersController',
+        'profile' => 'app\controllers\ProfileController',
     ],
     'components' => [
         'request' => [
@@ -56,7 +57,7 @@ $config = [
             'rules' => [
                 'OPTIONS,POST loginUser' => 'users/login-user',
                 'OPTIONS,POST registerUser' => 'users/register-user',
-                'OPTIONS,GET getUser' => 'users/get-user',
+                'OPTIONS,GET getUser' => 'profile/get-user',
 //                [
 //                    'class'      => 'yii\rest\UrlRule',
 //                    'controller' => 'users',

@@ -69,14 +69,6 @@ class UsersController extends AbstractController
         ];
     }
 
-     public function behaviors() {
-            $behaviors = parent::behaviors();
-            $behaviors['bearerAuth'] = [
-                'class' => HttpBearerAuth::className(),
-            ];
-        return $behaviors;
-    }
-
     public function actionGetUser() {
 //        $this->behaviors['authenticator'] = [
 //            'class' => HttpBearerAuth::className(),
