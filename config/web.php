@@ -56,6 +56,7 @@ $config = [
             'rules' => [
                 'OPTIONS,POST loginUser' => 'users/login-user',
                 'OPTIONS,POST registerUser' => 'users/register-user',
+                'OPTIONS,GET getUser' => 'users/get-user',
 //                [
 //                    'class'      => 'yii\rest\UrlRule',
 //                    'controller' => 'users',

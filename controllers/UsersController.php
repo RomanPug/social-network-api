@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\forms\LoginForm;
+use app\models\UserModel;
 use Yii;
 use app\models\forms\SignupForm;
 use app\extend\AbstractController;
@@ -11,14 +12,6 @@ use yii\filters\auth\HttpBearerAuth;
 class UsersController extends AbstractController
 {
     public $modelClass = 'app/models/UserModel';
-
-//    public function behaviors() {
-//        $behaviors = parent::behaviors();
-//        $behaviors['authenticator'] = [
-//            'class' => HttpBearerAuth::className(),
-//        ];
-//        return $behaviors;
-//    }
 
     public function actionRegisterUser() {
 
@@ -59,7 +52,8 @@ class UsersController extends AbstractController
                 'id' => $token->user_id,
                 'email' => $model->email,
                 'token' => $token->token,
-                'time' => date(DATE_RFC3339, $token->time),
+                'token_time' => $token->time,
+                'current_time' => time(),
                 'password' => $model->password
             ];
         } else return [
@@ -73,5 +67,24 @@ class UsersController extends AbstractController
         return [
             'login' => ['post']
         ];
+    }
+
+     public function behaviors() {
+            $behaviors = parent::behaviors();
+            $behaviors['bearerAuth'] = [
+                'class' => HttpBearerAuth::className(),
+            ];
+        return $behaviors;
+    }
+
+    public function actionGetUser() {
+//        $this->behaviors['authenticator'] = [
+//            'class' => HttpBearerAuth::className(),
+//        ];
+//        $behaviors['authenticator'] = [
+//            'class' => HttpBearerAuth::className()
+//        ];
+        $user = UserModel::findIdentityByAccessToken(Yii::$app->request->getBodyParam('token'));
+        return $user;
     }
 }
