@@ -2,6 +2,7 @@
 
 namespace app\extend;
 
+use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
 use yii\filters\Cors;
 use yii\rest\ActiveController;
@@ -27,10 +28,8 @@ abstract class AbstractController extends ActiveController
                 'Access-Control-Request-Headers' => ['Origin', 'Content-Type', 'Accept', 'Authorization'],
                 'Access-Control-Request-Method' => ['POST, GET', 'OPTIONS'],
                 'Access-Control-Allow-Credentials' => true,
-                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
             ]
         ];
-
 
         return $behaviors;
     }

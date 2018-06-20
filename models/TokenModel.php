@@ -54,4 +54,9 @@ class TokenModel extends ActiveRecord
     private function generateTokenString() {
         return \Yii::$app->security->generateRandomString(20);
     }
+
+    public function getId()
+    {
+        return $this->hasOne(UserModel::className(), ['id' => 'user_id']);
+    }
 }

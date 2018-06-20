@@ -30,7 +30,7 @@ $config = [
             'identityClass' => 'app\models\UserModel',
             'enableAutoLogin' => false,
             'enableSession' => false,
-            'loginUrl' => 'users/login-user'
+            'loginUrl' => null
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -54,7 +54,7 @@ $config = [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                'OPTIONS,GET loginUser' => 'users/login-user',
+                'OPTIONS,POST loginUser' => 'users/login-user',
                 'OPTIONS,POST registerUser' => 'users/register-user',
 //                [
 //                    'class'      => 'yii\rest\UrlRule',

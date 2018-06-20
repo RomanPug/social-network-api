@@ -50,12 +50,12 @@ class UserModel extends ActiveRecord implements \yii\web\IdentityInterface
      * @param mixed $token the token to be looked for
      * @param mixed $type the type of the token. The value of this parameter depends on the implementation.
      * For example, [[\yii\filters\auth\HttpBearerAuth]] will set this parameter to be `yii\filters\auth\HttpBearerAuth`.
-     * @return UserModel
+     * @return array|ActiveRecord
      * Null should be returned if such an identity cannot be found
      * or the identity is not in an active state (disabled, deleted, etc.)
      */
     public static function findIdentityByAccessToken($token, $type = null) {
-        return self::findOne(['token' => $token]);
+        return static::find()->with('token')->one();
     }
 
     /**
@@ -92,5 +92,10 @@ class UserModel extends ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey) {
         // TODO: Implement validateAuthKey() method.
+    }
+
+    public  function getToken()
+    {
+        return $this->hasOne(TokenModel::className(), ['user_id'=>'id']);
     }
 }
