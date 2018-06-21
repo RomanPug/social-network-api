@@ -2,23 +2,21 @@
 
 namespace app\controllers;
 
+use app\models\UserModel;
 use yii\filters\AccessControl;
 use yii\filters\auth\HttpBearerAuth;
 use app\extend\AbstractController;
-use yii\filters\Cors;
 
 class ProfileController extends AbstractController
 {
 
     public $modelClass = 'app/models/ProfileModel';
 
-    public function behaviors()
-    {
+    public function behaviors() {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator']['authMethods'] = [
-            HttpBearerAuth::className(),
+        $behaviors['authenticator'] = [
+            'class' => HttpBearerAuth::className(),
         ];
-        
         $behaviors['access'] = [
             'class' => AccessControl::className(),
             'rules' => [
@@ -28,11 +26,16 @@ class ProfileController extends AbstractController
                 ],
             ],
         ];
+
         return $behaviors;
     }
 
     public function actionGetUser() {
-        print_r(\Yii::$app->request->headers);die;
+        return $this->findUser(\Yii::$app->user->identity['id']);
+    }
+
+    private function findUser($id) {
+        return UserModel::find()->where(['id' => $id])->one();
     }
 
 }

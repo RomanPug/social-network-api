@@ -22,13 +22,16 @@ abstract class AbstractController extends ActiveController
                 'application/json' => Response::FORMAT_JSON,
             ]
         ];
+        $behaviors['authenticator'];
+        unset($behaviors['authenticator']);
         $behaviors['corsFilter'] = [
             'class' => Cors::className(),
             'cors' => [
-                'Access-Control-Request-Headers' => ['Origin', 'Content-Type', 'Accept', 'Authorization'],
-                'Access-Control-Request-Method' => ['POST, GET'],
-                'Access-Control-Allow-Credentials' => null,
-            ]
+                'Origin' => ['http://social-network.com:4200'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+                'Access-Control-Allow-Credentials' => true,
+            ],
         ];
 
         return $behaviors;
