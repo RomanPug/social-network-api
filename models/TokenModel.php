@@ -6,6 +6,7 @@ use yii\db\ActiveRecord;
 
 class TokenModel extends ActiveRecord
 {
+    const TOKEN_TIME = 3600 * 24 * 30;
 
     public static function tableName() {
         return 'tokens';
@@ -23,7 +24,7 @@ class TokenModel extends ActiveRecord
     }
 
     public function generateToken() {
-        $token_time = time() + 3600 * 24 * 30;
+        $token_time = time() + self::TOKEN_TIME;
         $checkUser = $this->findByToken($this->user_id);
 
         if ($checkUser) {
@@ -52,7 +53,7 @@ class TokenModel extends ActiveRecord
     }
 
     private function generateTokenString() {
-        return \Yii::$app->security->generateRandomString(20);
+        return \Yii::$app->security->generateRandomString(255);
     }
 
     public function getId()
