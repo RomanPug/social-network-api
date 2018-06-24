@@ -31,7 +31,8 @@ class UsersController extends AbstractController
             $user->name = Yii::$app->request->getBodyParam('firstname');
             $user->surname = Yii::$app->request->getBodyParam('lastname');
             $user->email = Yii::$app->request->getBodyParam('email');
-            $user->password = $user->encodePassword(Yii::$app->request->getBodyParam('password'));;
+            $user->password = $user->encodePassword(Yii::$app->request->getBodyParam('password'));
+            $user->gender = Yii::$app->request->getBodyParam('gender');
             $user->signup();
             $result =   [
                 'success' => 1,
