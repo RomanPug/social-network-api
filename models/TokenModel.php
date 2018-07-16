@@ -3,6 +3,7 @@
 namespace app\models;
 
 use yii\db\ActiveRecord;
+use yii\db\Query;
 
 class TokenModel extends ActiveRecord
 {
@@ -41,6 +42,8 @@ class TokenModel extends ActiveRecord
                 $this->time = $checkUser->time;
             }
             return $this;
+        } else if ($checkUser === 'user_not_found') {
+            return $this;
         } else {
             $this->time = $token_time;
             $this->token = $this->generateTokenString();
@@ -49,7 +52,13 @@ class TokenModel extends ActiveRecord
     }
 
     private function findByToken($user_id) {
-        return self::find()->where('user_id' === $user_id)->one();
+        if ($user_id !== 'user_not_found') {
+            $token = (new Query())->select(self::tableName())->where(['user_id' => $user_id])->one();
+        } else {
+            $token = 'user_not_found';
+        }
+        print_r($token);die;
+        return $token;
     }
 
     private function generateTokenString() {
